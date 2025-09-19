@@ -1,9 +1,29 @@
 package storage
 
-import "movie-reservation/models"
+import (
+	"fmt"
+	"log"
+	"os"
 
-var Movies = []models.Movie{
-	{ID: 1, Title: "Inception", Year: 2010},
-	{ID: 2, Title: "Interstellar", Year: 2014},
-	{ID: 3, Title: "The Dark Knight", Year: 2008},
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
+
+var DB *gorm.DB
+
+func InitDB() {
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "host=localhost user=root password=secret dbname=moviedb port=5432 sslmode=disable"
+	}
+
+	var err error
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("failed to connect to database: %v", err)
+	}
+
+	fmt.Println("Hello World --------->>>>")
+
+	fmt.Println("✅ Connected to Postgres")
 }

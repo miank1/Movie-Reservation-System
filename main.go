@@ -3,11 +3,19 @@ package main
 import (
 	"log"
 	"movie-reservation/handlers"
+	"movie-reservation/models"
+	"movie-reservation/storage"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	// init DB
+	storage.InitDB()
+
+	// migrate schema
+	storage.DB.AutoMigrate(&models.Movie{})
+
 	r := gin.Default()
 
 	// health check
