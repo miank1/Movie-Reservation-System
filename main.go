@@ -1,46 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"movie-reservation/handlers"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// health endpoint
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintln(w, "Movie Reservation API — healthy")
+	r := gin.Default()
+
+	// health check
+	r.GET("/health", func(c *gin.Context) {
+		c.String(200, "Movie Reservation API — healthy")
 	})
 
-	// movies endpoints
-	http.HandleFunc("/movies", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			handlers.ListMovies(w, r)
-		} else if r.Method == http.MethodPost {
-			handlers.CreateMovie(w, r)
-		} else {
-			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
-		}
-	})
-
-	http.HandleFunc("/movies/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handlers.GetMovie(w, r)
-		case http.MethodPut:
-			handlers.UpdateMovie(w, r)
-		case http.MethodDelete:
-			handlers.DeleteMovie(w, r)
-		default:
-			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
-		}
-	})
+	// movies routes
+	r.GET("/movies", handlers.ListMovies)
+	r.POST("/movies", handlers.CreateMovie)
+	r.GET("/movies/:id", handlers.GetMovie)
+	r.PUT("/movies/:id", handlers.UpdateMovie)
+	r.DELETE("/movies/:id", handlers.DeleteMovie)
 
 	addr := ":8080"
 	log.Printf("Starting server on %s\n", addr)
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	if err := r.Run(addr); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }

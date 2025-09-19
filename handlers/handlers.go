@@ -1,82 +1,59 @@
 package handlers
 
 import (
-	"encoding/json"
 	"movie-reservation/models"
 	"movie-reservation/storage"
 	"net/http"
 	"strconv"
-	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
-// ListMovies handles GET /movies
-func ListMovies(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(storage.Movies)
+func ListMovies(c *gin.Context) {
+	c.JSON(http.StatusOK, storage.Movies)
 }
 
-// CreateMovie handles POST /movies
-func CreateMovie(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
+func CreateMovie(c *gin.Context) {
 	var newMovie models.Movie
-	if err := json.NewDecoder(r.Body).Decode(&newMovie); err != nil {
-		http.Error(w, "invalid request body", http.StatusBadRequest)
+	if err := c.ShouldBindJSON(&newMovie); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
 		return
 	}
 
 	newMovie.ID = len(storage.Movies) + 1
 	storage.Movies = append(storage.Movies, newMovie)
-
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(newMovie)
+	c.JSON(http.StatusCreated, newMovie)
 }
 
-// GetMovie handles GET /movies/{id}
-func GetMovie(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	parts := strings.Split(r.URL.Path, "/")
-	if len(parts) < 3 {
-		http.Error(w, "missing id", http.StatusBadRequest)
-		return
-	}
-
-	id, err := strconv.Atoi(parts[2])
+func GetMovie(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, "invalid id", http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
 		return
 	}
 
 	for _, m := range storage.Movies {
 		if m.ID == id {
-			json.NewEncoder(w).Encode(m)
+			c.JSON(http.StatusOK, m)
 			return
 		}
 	}
 
-	http.Error(w, "movie not found", http.StatusNotFound)
+	c.JSON(http.StatusNotFound, gin.H{"error": "movie not found"})
 }
 
-// UpdateMovie handles PUT /movies/{id}
-func UpdateMovie(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	parts := strings.Split(r.URL.Path, "/")
-	if len(parts) < 3 {
-		http.Error(w, "missing id", http.StatusBadRequest)
-		return
-	}
-
-	id, err := strconv.Atoi(parts[2])
+func UpdateMovie(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, "invalid id", http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
 		return
 	}
 
 	var updated models.Movie
-	if err := json.NewDecoder(r.Body).Decode(&updated); err != nil {
-		http.Error(w, "invalid request body", http.StatusBadRequest)
+	if err := c.ShouldBindJSON(&updated); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
 		return
 	}
 
@@ -84,27 +61,19 @@ func UpdateMovie(w http.ResponseWriter, r *http.Request) {
 		if m.ID == id {
 			updated.ID = id
 			storage.Movies[i] = updated
-			json.NewEncoder(w).Encode(updated)
+			c.JSON(http.StatusOK, updated)
 			return
 		}
 	}
 
-	http.Error(w, "movie not found", http.StatusNotFound)
+	c.JSON(http.StatusNotFound, gin.H{"error": "movie not found"})
 }
 
-// DeleteMovie handles DELETE /movies/{id}
-func DeleteMovie(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	parts := strings.Split(r.URL.Path, "/")
-	if len(parts) < 3 {
-		http.Error(w, "missing id", http.StatusBadRequest)
-		return
-	}
-
-	id, err := strconv.Atoi(parts[2])
+func DeleteMovie(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		http.Error(w, "invalid id", http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
 		return
 	}
 
@@ -119,10 +88,10 @@ func DeleteMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !found {
-		http.Error(w, "movie not found", http.StatusNotFound)
+		c.JSON(http.StatusNotFound, gin.H{"error": "movie not found"})
 		return
 	}
 
 	storage.Movies = newMovies
-	w.WriteHeader(http.StatusNoContent)
+	c.Status(http.StatusNoContent)
 }
