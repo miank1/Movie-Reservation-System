@@ -7,8 +7,8 @@ services:
       - "8080:8080"
     depends_on:
       - db
-    environment:
-      DATABASE_URL: "postgres://root:secret@db:5432/moviedb?sslmode=disable"
+    env_file:
+      - .env
 
   db:
     image: postgres:15
