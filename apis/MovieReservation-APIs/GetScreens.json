@@ -1,0 +1,21 @@
+{
+  "name": "GetScreens",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/screens",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "GET",
+    "queryParams": [],
+    "headers": [],
+    "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Screen 1\",\n    \"theater_id\": 1\n  }\n]",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "agetsc17733837404281"
+}

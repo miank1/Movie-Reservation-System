@@ -1,0 +1,21 @@
+{
+  "name": "CreateSeats",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/seats",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "POST",
+    "queryParams": [],
+    "headers": [],
+    "body": "{\n  \"screen_id\": 1,\n  \"row\": \"A\",\n  \"number\": 1\n}",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "acreat17733929692291"
+}

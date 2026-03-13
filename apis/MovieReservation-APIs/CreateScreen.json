@@ -1,0 +1,21 @@
+{
+  "name": "CreateScreen",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/screens",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "POST",
+    "queryParams": [],
+    "headers": [],
+    "body": "{\n  \"name\": \"Screen 2\",\n  \"theater_id\": 3\n}",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "acreat17733836674421"
+}

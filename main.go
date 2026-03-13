@@ -22,5 +22,16 @@ func main() {
 
 	router.GET("/theaters", handlers.GetTheaters)
 	router.POST("/theaters", handlers.CreateTheater)
+
+	router.GET("/screens", handlers.GetScreens)
+	router.POST("/screens", handlers.CreateScreen)
+
+	router.GET("/shows", handlers.GetShows)
+	router.POST("/shows", handlers.CreateShow)
+
+	router.GET("/seats", handlers.GetSeats)
+	router.POST("/seats", handlers.CreateSeat)
+
+	router.POST("/bookings", handlers.CreateBooking)
 	router.Run(":8080")
 }

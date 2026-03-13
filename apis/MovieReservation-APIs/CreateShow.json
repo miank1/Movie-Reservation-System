@@ -1,0 +1,21 @@
+{
+  "name": "CreateShow",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/shows",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "POST",
+    "queryParams": [],
+    "headers": [],
+    "body": "{\n  \"movie_id\": 1,\n  \"screen_id\": 1,\n  \"start_at\": \"2026-03-15T19:00:00\"\n}",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "acreat17733855098881"
+}

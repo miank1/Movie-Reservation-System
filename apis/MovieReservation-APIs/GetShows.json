@@ -1,0 +1,21 @@
+{
+  "name": "GetShows",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/shows",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "GET",
+    "queryParams": [],
+    "headers": [],
+    "body": "",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "agetsh17733858245411"
+}

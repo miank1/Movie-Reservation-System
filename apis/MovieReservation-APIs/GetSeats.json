@@ -1,0 +1,21 @@
+{
+  "name": "GetSeats",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/seats",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "GET",
+    "queryParams": [],
+    "headers": [],
+    "body": "",
+    "contentType": "text/plain",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "agetse17733932370881"
+}
