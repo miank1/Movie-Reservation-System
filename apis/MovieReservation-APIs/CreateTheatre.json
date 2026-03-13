@@ -1,0 +1,21 @@
+{
+  "name": "CreateTheatre",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/theaters",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "POST",
+    "queryParams": [],
+    "headers": [],
+    "body": "{\n  \"name\": \"PVR Koramangala\",\n  \"location\": \"Bangalore\"\n}",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  },
+  "rank": "acreat17733828783591"
+}

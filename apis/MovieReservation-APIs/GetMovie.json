@@ -1,0 +1,22 @@
+{
+  "name": "GetMovie",
+  "rank": "auntit17733798092071",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/movies",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "GET",
+    "queryParams": [],
+    "headers": [],
+    "body": "",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    },
+    "pathVariables": []
+  }
+}
